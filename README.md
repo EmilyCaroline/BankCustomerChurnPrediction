@@ -9,6 +9,7 @@ The main objective of this project is to create a a **dashboard** which provides
 ## Authors
 Nyein Than Thar (Caroline)
 Peerada Tawong (Orla)
+Waruth Lertcheewanan
 
 ## Project status
 This is an initial implementation stage.
