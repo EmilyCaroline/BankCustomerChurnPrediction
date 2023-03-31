@@ -14,3 +14,17 @@ Waruth Lertcheewanan
 
 ## Project status
 This is an initial implementation stage.
+
+## How to Use?
+
+# Clone this repository
+$ git clone https://gitlab.uwe.ac.uk/idp-team-1/bank-customer-churn-prediction.git
+
+# Go into the repository
+$ cd BANK_CUSTOMER_CHURN_PREDICTION
+
+# Install dependencies
+$ pip install requirements.txt
+
+# Run the streamlit app
+$ streamlit run dashboard.py
