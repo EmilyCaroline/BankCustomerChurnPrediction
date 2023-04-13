@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2 style="color: #2f5496;">Data Understanding</h2>
+    <p>In this project, we use two datasets from two different data sources for Bank Customer Churn Prediction. All of
+        the data used in this project came from a public data source and can be reused by others. The reference list
+        contains citations or references to the dataset.</p>
+    <p><strong>About Datasets</strong></p>
+    <p>
+        <span style="font-weight: bold;color:#2f5496;">First Dataset </span><a
+            href="https://www.kaggle.com/datasets/shantanudhakadd/bank-customer-churn-prediction" target="_blank">Click
+            Here</a>
+    </p>
+    <p><span style="font-weight: bold;color:#2f5496;">Second Dataset</span> <a
+            href=" https://github.com/MarkWoolnough/CreditCardCustomerChurn/blob/master/CUST_SUM.csv"
+            target="_blank">Click Here</a></p>
+    <p>The first dataset that we use in our analysis has the following feature:</p>
+    <ul>
+        <li>RowNumber&mdash;corresponds to the record (row) number and has no effect on the output.</li>
+        <li>CustomerId&mdash;contains random values and has no effect on customer leaving the bank.</li>
+        <li>Surname&mdash;the surname of a customer has no impact on their decision to leave the bank.</li>
+        <li>CreditScore&mdash;can have an effect on customer churn, since a customer with a higher credit score is less
+            likely to leave the bank.</li>
+        <li>Geography&mdash;a customer&rsquo;s location can affect their decision to leave the bank.</li>
+        <li>Gender&mdash;it&rsquo;s interesting to explore whether gender plays a role in a customer leaving the bank.
+        </li>
+        <li>Age&mdash;this is certainly relevant, since older customers are less likely to leave their bank than younger
+            ones.</li>
+        <li>Tenure&mdash;refers to the number of years that the customer has been a client of the bank. Normally, older
+            clients are more loyal and less likely to leave a bank.
+            <ul>
+                <li>Balance&mdash;also a very good indicator of customer churn, as people with a higher balance in their
+                    accounts are less likely to leave the bank compared to those with lower balances.</li>
+                <li>NumOfProducts&mdash;refers to the number of products that a customer has purchased through the bank.
+                </li>
+                <li>HasCrCard&mdash;denotes whether or not a customer has a credit card. This column is also relevant,
+                    since people with a credit card are less likely to leave the bank.</li>
+                <li>IsActiveMember&mdash;active customers are less likely to leave the bank.</li>
+                <li>EstimatedSalary&mdash;as with balance, people with lower salaries are more likely to leave the bank
+                    compared to those with higher salaries.</li>
+                <li>Exited&mdash;whether or not the customer left the bank.</li>
+            </ul>
+        </li>
+    </ul>
+    <p>The second dataset that we use in our analysis has the following feature:</p>
+    <ul>
+        <li>CUST_ID&mdash;This column name contains random values assigned to each customer and has no effect on whether
+            or not they leave the bank. It is simply a unique identifier for each customer. This feature does not impact
+            the prediction model.</li>
+        <li>AGE&mdash;This feature could potentially impact the machine learning model as younger or older customers may
+            be more or less likely to churn.</li>
+        <li>INCOME&mdash;It could potentially impact the machine learning model as customers with higher incomes may be
+            more or less likely to churn.</li>
+        <li>CHURN&mdash;This feature indicates whether or not the customer has churned. This is the target variable that
+            we want to predict, and it is the most important feature in the dataset.</li>
+        <li>INVESTMENT&mdash;This feature represents the amount of investment made by the customer. This feature could
+            potentially impact the machine learning model as customers who have made significant investments with the
+            bank may be more or less likely to churn.</li>
+        <li>ACTIVITY&mdash;This feature represents the level of activity of the customer. This feature could potentially
+            impact the machine learning model as customers who are more active with the bank may be more or less likely
+            to churn.</li>
+        <li>YRLY_AMT&mdash;This feature represents the total yearly amount spent by the customer. This feature could
+            potentially impact the machine learning model as customers who spend more with the bank may be more or less
+            likely to churn.</li>
+        <li>AVG_DAILY_TX&mdash;This attribute indicates the average number of daily transactions performed by the
+            consumer and it has influence on machine learning model from customer who conducts transaction.</li>
+        <li>YRLY_TAX&mdash;This feature indicates the customer's total annual expenditures. It affects the prediction
+            model from customer spend.</li>
+        <li>AVG_TX_AMT&mdash;This feature indicates the average transaction amount per client transaction. Customers
+            that conduct larger or smaller transactions with the bank may be more or less likely to churn, depending on
+            the effect of this characteristic on the machine learning model.</li>
+        <li>NEGTWEETS&mdash;This feature represents the number of negative tweets posted by the customer. This feature
+            could potentially impact the machine learning model as customers who have posted more negative tweets about
+            the bank may be more or less likely to churn.</li>
+        <li>STATE&mdash;This feature represents the state in which the customer resides. This feature could potentially
+            impact the machine learning model as customers from different states may be more or less likely to churn.
+        </li>
+        <li>EDUCATION: This feature represents the education level of the customer. This feature could potentially
+            impact the machine learning model as customers with different education levels may be more or less likely to
+            churn.</li>
+        <li>EDUCATION_GROUP: This feature represents the education level of the customer grouped into categories. This
+            feature could potentially impact the machine learning model as customers in different education groups may
+            be more or less likely to churn.</li>
+        <li>TWITTERID: This feature contains random values and its purpose or meaning is not clear from the given
+            dataset. It is possible that this feature was included in the dataset by mistake or that it was used for
+            some other purpose that is not related to the customer churn prediction task as the same sense of CUST_ID
+        </li>
+    </ul>
+</body>
+
+</html>
