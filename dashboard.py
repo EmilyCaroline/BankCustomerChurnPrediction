@@ -4,8 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 from utils.c_models import random_forest, logistic_regression
-import altair as alt
-import pandas as pd
+import streamlit.components.v1 as components
+
 
 st.set_page_config(
     page_title="Bank Customer Churn Prediction",
@@ -28,6 +28,15 @@ st.sidebar.title("Bank customers churn prediction")
 st.markdown("Welcome to this dashboard for bank customers churn insights! ")
 st.sidebar.markdown(
     "Explore, predict churn rate of customers")
+
+st.sidebar.title("Dataset Description")
+if not st.sidebar.checkbox("Hide", False, key='10'):
+    st.markdown("### 1. Dataset Description")
+    HtmlFile = open("dataset_desp.html", 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    print(source_code)
+    components.html(source_code, height = 1200)
+
 
 # 1st part of the dashboard
 st.sidebar.title("Preliminary Data Analysis")
