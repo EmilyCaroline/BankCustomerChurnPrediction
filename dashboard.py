@@ -3,6 +3,9 @@ from sklearn.ensemble import RandomForestClassifier
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
+from utils.c_models import random_forest, logistic_regression
+import altair as alt
+import pandas as pd
 
 st.set_page_config(
     page_title="Bank Customer Churn Prediction",
@@ -116,48 +119,37 @@ if not st.sidebar.checkbox("Hide", True, key='4'):
         st.markdown(":blue[Tenure]: The non churn group tends to have tenures that are longer, with a median near 5 and an upper quartile close to 6, whereas the churn group has a median that is not clear and an upper quartile close to 5. There are some outliers in both groups, but there are fewer outliers in the non-churn group. Salary ranges for both groups are roughly similar, with a median wage of about 2.3–2.5 million, an upper quartile of about 11–12 million, and a lower quartile of about 10 million. There are no outliers in any category.")
         st.markdown(":blue[Investment]: The values of both groups' investments varied widely, with no clear median and an upper quartile close to 1500. In both categories, there are a few anomalies. Annual taxes: Both groups have a wide range of annual taxes, none of which have a clear median. The upper quartile is close to 1500, while the lower quartiles are located around 0. In both categories, there are a few anomalies.")
 
-#  2nd part : classification for churn prediction
-# st.sidebar.title("Churn prediction")
-# select2 = st.sidebar.slider(
-#     'Select number of trees to build in the random forest model', 100, 10, key='6')
+ # 2nd part : classification for churn prediction
+st.sidebar.title("Churn Prediction")
+select3 = st.sidebar.selectbox('Select an option',
+                               ['Random Forest', 'Logistic Regression', 'Gradient Boosting'], key='8')
 
-# if not st.sidebar.checkbox("Hide", True, key='7'):
-#     st.markdown("### 2. Churn prediction")
-#     st.markdown(
-#         "Supervised classification evaluation using a Random Forest model")
-#     if select2:
-#         score, score_, report, confus_matrix, fig, fig2 = classify(
-#             model=RandomForestClassifier(n_estimators=select2, max_features=None))
-#         st.write('Score for train data:\n ', round(score, 2))
-#         st.write('Score for test data:\n ', round(score_, 2))
-
-#         st.write('Classification report:\n ')
-#         st.text('>\n ' + report)
-#         st.write('\n ')
-#         st.write('\n ')
-#         st.write('Confustion matrix:\n ')
-#         st.table(confus_matrix)
-#         st.write('\n ')
-#         st.write('\n ')
-#         st.pyplot(fig)
-#         st.write('\n ')
-#         st.write('\n ')
-#         st.pyplot(fig2)
-
-
-# #  3rd part : clustering strategy
-# st.sidebar.title("Clustering for a marketing strategy")
-# select3 = st.sidebar.slider(
-#     'Select the upper bound of estimated probability to be attrited (in %):', 100, 20)
-# select4 = st.sidebar.slider('Now select the lower bound:', 0, select3)
-
-# if not st.sidebar.checkbox("Hide", True):
-#     st.markdown("### 3. Clustering for a marketing strategy")
-#     st.markdown("See how many customers are in the probability interval.")
-#     if select3:
-#         fig, a, b = probacluster(model=RandomForestClassifier(
-#             n_estimators=50, max_features=None), up=select3, lo=select4)
-#         st.write('Number of selected customers:\n ', a)
-#         st.write('Proportion:\n ', b)
-#         st.write('\n ')
-#         st.pyplot(fig)
+if not st.sidebar.checkbox("Hide", True, key='9'):
+    st.markdown("### 3. Churn prediction training models")
+    if select3 == 'Random Forest':
+        st.markdown("##### Random Forest")
+        return_values = random_forest()
+        st.write('Accuracy Score: ', return_values[0])
+        st.write(
+            'The result', return_values[0], "is the accuracy score of the random forest classifier on the held-out test set. It indicates that the classifier correctly predicted the labels of 82.6% of the samples in the test set.")
+        st.write('Test set RMSE of rf: ', return_values[1])
+        st.write('The Test set RMSE (Root Mean Squared Error) of :green[0.41] for the random forest classifier is the average deviation between the predicted and actual values of the target variable on the held-out test set. RMSE is a frequently employed metric for evaluating the performance of regression models; it represents the average size of the model\'s mistakes in predicting the target variable. It is determined by taking the square root of the mean squared error (MSE), which is the average of the squared discrepancies between the anticipated and actual values. In this instance, the RMSE of 0.41 indicates that the random forest classifier predicts the target variable on the held-out test set with very few mistakes. It is essential to remember, however, that the interpretation of RMSE relies on the issue\'s nature and the target variable\' size. Therefore, selecting the proper assessment metric is always advisable based on the nature of the situation at hand.')
+        st.write('F1-score: ', return_values[2])
+        st.write('The F1-score of', return_values[2], 'for the random forest classifier on the held-out test set demonstrates a reasonable level of accuracy and recall. F1-score is the harmonic mean of precision and recall, where precision evaluates the proportion of genuine positive predictions out of all positive predictions and recall measures the same proportion out of real positive samples. A F1-score of 1 denotes flawless precision and recall, whereas an F1-score of 0 denotes no real positive predictions or complete failure of the classifier. In this instance, the F1-score is less than 1, suggesting that the classifier made some inaccurate predictions, but nevertheless accurately predicted a substantial number of positive samples.')
+        st.pyplot(return_values[3])
+        st.write("From the random forest algorithm, :green[Activity, Age and Number of products] are the most critical predictor variables to predict :blue[churn]. This means that customers who have a high level of activity and engagement with the services, are older, and use more products are less likely to churn.")
+        st.subheader(return_values[4])
+        st.pyplot(return_values[5])
+        st.subheader(return_values[6])
+        st.pyplot(return_values[7])
+        st.dataframe(return_values[8])
+    if select3 == 'Logistic Regression':
+        st.markdown("##### Logistic Regression")
+        return_values = logistic_regression()
+        st.pyplot(return_values[0])
+        st.subheader(return_values[1])
+        st.pyplot(return_values[2])
+        st.subheader(return_values[3])
+        st.pyplot(return_values[4])
+        st.dataframe(return_values[5])
+        st.dataframe(return_values[6])
