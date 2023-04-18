@@ -17,6 +17,9 @@ from sklearn.metrics import mean_squared_error as MSE
 from sklearn.metrics import f1_score
 import streamlit as st
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import GradientBoostingClassifier
+from xgboost import XGBClassifier
 
 plt.style.use('seaborn-muted')
 
@@ -278,3 +281,118 @@ def logistic_regression():
         y_test, predictions, predictions_prob, model_name='Logistic Regression')
 
     return fig, cm_fig1_cap, cm_fig1, cm_fig2_cap, cm_fig2, classification_report_df
+
+def gradient_boosting_sklearn():
+    data_split = split_train_test()
+    X_train = data_split[0]
+    X_test = data_split[1]
+    y_train = data_split[2]
+    y_test = data_split[3]
+    features = data_split[4]
+    target = data_split[5]
+    grid_search = data_split[6]
+
+    # Define the parameter grid to search over
+    param_grid = {'max_depth': [2, 3, 4, 6, 10, 15],
+                'n_estimators': [50, 100, 300, 500]}
+
+    # Fit Gradient Boosting model with best hyperparameters
+    model = GradientBoostingClassifier(max_depth=3, n_estimators=100)
+    model.fit(X_train, y_train)
+
+    # Calculate feature importances
+    importances = model.feature_importances_
+    indices = np.argsort(importances)
+
+    # Print feature importances
+    # print('Feature Importances:')
+    # print(importances[indices])
+    # print([features[i] for i in indices])
+    # Plot feature importances
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.set_title('Feature Importances: Complete Gradient Boosting', fontsize=16)
+    ax.barh(range(len(indices)), importances[indices], align='center', color='#5B8BAB')
+    ax.set_yticks(range(len(indices)))
+    ax.set_yticklabels([features[i] for i in indices], fontsize=12)
+    ax.set_xlabel('Relative Importance', fontsize=14)
+    ax.grid(axis='x', linestyle='--', alpha=0.7)
+    for i, v in enumerate(importances[indices]):
+        ax.text(v + 0.01, i, f'{v:.2f}', fontsize=12)
+    plt.tight_layout()
+
+     # Make predictions on test data
+    y_pred = grid_search.predict(X_test)
+    y_pred_prob = grid_search.predict_proba(X_test)[:,1]
+
+    # Compute and plot confusion matrix
+    cm = confusion_matrix(y_test, y_pred)
+    
+
+    cm_plot1 = plot_confusion_matrix(cm, target_names=['Not Churned', 'Churned'], normalize=False)
+    cm_fig1 = cm_plot1[0]
+    cm_fig1_cap = cm_plot1[1]
+
+    cm_plot2 = plot_confusion_matrix(cm, target_names=['Not Churned', 'Churned'], normalize=True, title='Confusion Matrix (Normalized)')
+    cm_fig2 = cm_plot2[0]
+    cm_fig2_cap = cm_plot2[1]
+
+    classification_report_df = classification_report_to_dataframe(y_test, y_pred, y_pred_prob, model_name='Gradient Boosting (Sklearn)')
+
+    return fig, cm_fig1_cap, cm_fig1, cm_fig2_cap, cm_fig2, classification_report_df
+
+    data_split = split_train_test()
+    X_train = data_split[0]
+    X_test = data_split[1]
+    y_train = data_split[2]
+    y_test = data_split[3]
+    features = data_split[4]
+    target = data_split[5]
+    grid_search = data_split[6]
+
+    
+    # Define hyperparameters to search over
+    param_grid = {'max_depth': [2, 3, 4, 6, 10, 15],
+                'n_estimators': [50, 100, 300, 500],
+                'learning_rate': [0.01, 0.1, 0.2, 0.3, 0.5]}
+
+    # Create an XGBoost model object
+    xgb = XGBClassifier()
+
+    # Create a grid search object with cross-validation
+    model_XGB = GridSearchCV(xgb, param_grid, cv=5, n_jobs=10)
+
+    # Fit the grid search object on the training data
+    model_XGB.fit(X_train, y_train)
+
+    # Print the best hyperparameters
+    best_max_depth = model_XGB.best_params_['max_depth']
+    best_n_estimators = model_XGB.best_params_['n_estimators']
+    best_learning_rate = model_XGB.best_params_['learning_rate']
+    print("Best max depth:", best_max_depth)
+    print("Best n estimators:", best_n_estimators)
+    print("Best learning rate:", best_learning_rate)
+
+    # Use the best hyperparameters to fit the model on the training data
+    xgb = XGBClassifier(max_depth=3, n_estimators=50, learning_rate=0.2)
+    xgb.fit(X_train, y_train)
+
+    print(xgb)
+
+    # # Predict on the test data
+    # y_pred = xgb.predict(X_test)
+    # y_pred_prob = xgb.predict_proba(X_test)[:,1]
+
+    # importances = xgb.feature_importances_
+    # indices = np.argsort(importances)
+
+    # # Plot feature importances
+    # fig, ax = plt.subplots(figsize=(12, 8))
+    # plt.figure(figsize=(12, 8))
+    # plt.title('Feature Importances: Complete Extreme Gradient Boosting (XGBoost)', fontsize=18)
+    # plt.barh(range(len(indices)), importances[indices], align='center', color='orange')
+    # plt.yticks(range(len(indices)), [features[i] for i in indices], fontsize=14)
+    # plt.xlabel('Relative Importance', fontsize=14)
+    # plt.grid(axis='x', linestyle='--', alpha=0.7)
+    # plt.tight_layout()
+
+    return fig
