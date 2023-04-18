@@ -3,7 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
-from utils.c_models import random_forest, logistic_regression
+from utils.c_models import random_forest, logistic_regression, xg_boost, gradient_boosting_sklearn
 import streamlit.components.v1 as components
 
 
@@ -131,7 +131,7 @@ if not st.sidebar.checkbox("Hide", True, key='4'):
  # 2nd part : classification for churn prediction
 st.sidebar.title("Churn Prediction")
 select3 = st.sidebar.selectbox('Select an option',
-                               ['Random Forest', 'Logistic Regression', 'Gradient Boosting'], key='8')
+                               ['Random Forest', 'Logistic Regression', 'Gradient Boosting', 'Extreme Gradient Boosting (XGBoost)'], key='8')
 
 if not st.sidebar.checkbox("Hide", True, key='9'):
     st.markdown("### 3. Churn prediction training models")
@@ -161,4 +161,15 @@ if not st.sidebar.checkbox("Hide", True, key='9'):
         st.subheader(return_values[3])
         st.pyplot(return_values[4])
         st.dataframe(return_values[5])
-        st.dataframe(return_values[6])
+        # st.dataframe(return_values[6])
+    if select3 == 'Gradient Boosting':
+        st.markdown("##### Gradient Boosting (Sklearn)")
+        gb_return_values = gradient_boosting_sklearn()
+        st.pyplot(gb_return_values[0])
+        st.subheader(gb_return_values[1])
+        st.pyplot(gb_return_values[2])
+        st.subheader(gb_return_values[3])
+        st.pyplot(gb_return_values[4])
+        st.dataframe(gb_return_values[5])
+
+
