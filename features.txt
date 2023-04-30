@@ -1,0 +1,18 @@
+CreditScore
+Age
+Tenure
+Balance
+NumOfProducts
+HasCrCard
+IsActiveMember
+EstimatedSalary
+Education
+Investment
+Activity
+Yearly Amt
+Avg Daily Tax
+Yearly Tax
+Avg Tax Amt
+Geography_dummy
+Gender_dummy
+Education Group_dummy
